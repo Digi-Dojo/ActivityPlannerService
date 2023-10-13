@@ -4,8 +4,8 @@ plugins {
     id("java")
 }
 
-group = "org.example"
-version = "1.0-SNAPSHOT"
+group = "it.unibz.digidojo"
+version = "1.0"
 
 repositories {
     mavenCentral()
@@ -35,6 +35,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.kafka:spring-kafka-test")
+    compileOnly(project(":DigiDojoSharedModel"))
 }
 
 extra {
@@ -48,5 +49,5 @@ extra {
 
 tasks.test {
     useJUnitPlatform()
-    include("it/unibz/taskcalendarservice/domain/CalendarEventRepositoryTest.class")
+    include("it/unibz/digidojo/activityplannerservice/domain/CalendarEventRepositoryTest.class")
 }

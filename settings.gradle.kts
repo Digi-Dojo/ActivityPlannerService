@@ -1,1 +1,3 @@
-rootProject.name = "MService-TasksAndCalendars"
+rootProject.name = "ActivityPlannerService"
+include(":DigiDojoSharedModel")
+project(":DigiDojoSharedModel").projectDir = file("../DigiDojoSharedModel")
