@@ -12,10 +12,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @EnableAutoConfiguration
 @EnableJpaRepositories({"it.unibz.digidojo.activityplannerservice.domain"})
-@ComponentScan(basePackages = {"it.unibz.digidojo.sharedmodel"})
-public class TaskAndCalendarServiceApplication {
+public class ActivityPlannerServiceApplication {
     public static void main(String[] args) throws UnknownHostException {
-        SpringApplication.run(TaskAndCalendarServiceApplication.class, args);
+        SpringApplication.run(ActivityPlannerServiceApplication.class, args);
         System.out.printf(
                 "Server running on %s",
                 InetAddress.getLocalHost().getHostAddress()
