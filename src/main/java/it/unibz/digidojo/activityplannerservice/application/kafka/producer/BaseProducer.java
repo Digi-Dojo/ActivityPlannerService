@@ -20,7 +20,7 @@ public abstract class BaseProducer {
 
     protected <T extends BaseEvent> void sendEvent(final CRUD operation, final T event) {
         try {
-            final String topic = KafkaConfig.topics.get(operation);
+            final String topic = KafkaConfig.TOPICS.get(operation);
 
             if (topic.isEmpty()) {
                 System.out.printf("CRUD operation does not have a topic mapped. operation=%s\n", operation);

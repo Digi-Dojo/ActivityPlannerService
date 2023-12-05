@@ -5,6 +5,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.listener.adapter.RecordFilterStrategy;
 import org.springframework.stereotype.Component;
 
+import it.unibz.digidojo.activityplannerservice.config.KafkaConfig;
 import it.unibz.digidojo.activityplannerservice.domain.usecase.user.CRUDUser;
 import it.unibz.digidojo.sharedmodel.dto.UserDTO;
 import it.unibz.digidojo.sharedmodel.event.user.UserCreatedEvent;
@@ -23,8 +24,8 @@ public class UserConsumer extends BaseConsumer {
     }
 
     @KafkaListener(
-            topics = "#{@kafkaConfig.topics[T(CRUD).CREATE]}",
-            filter = "#{T(UserConsumer).filterStrategy}"
+            topics = KafkaConfig.CREATE_TOPIC,
+            filter = "#{@userConsumer.filterStrategy}"
     )
     public void consumeUserCreatedEvent(String jsonMessage) {
         try {
@@ -41,8 +42,8 @@ public class UserConsumer extends BaseConsumer {
     }
 
     @KafkaListener(
-            topics = "#{@kafkaConfig.topics[T(CRUD).DELETE]}",
-            filter = "#{T(UserConsumer).filterStrategy}"
+            topics = KafkaConfig.DELETE_TOPIC,
+            filter = "#{@userConsumer.filterStrategy}"
     )
     public void consumeUserDeletedEvent(String jsonMessage) {
         try {

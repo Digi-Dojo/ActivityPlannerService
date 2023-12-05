@@ -10,6 +10,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.listener.adapter.RecordFilterStrategy;
 import org.springframework.stereotype.Component;
 
+import it.unibz.digidojo.activityplannerservice.config.KafkaConfig;
 import it.unibz.digidojo.activityplannerservice.domain.model.place.Place;
 import it.unibz.digidojo.sharedmodel.dto.PlaceDTO;
 import it.unibz.digidojo.sharedmodel.event.place.PlaceCreatedEvent;
@@ -18,7 +19,7 @@ import it.unibz.digidojo.sharedmodel.event.place.PlaceDeletedEvent;
 @Component
 @Getter
 public class PlaceConsumer extends BaseConsumer {
-    private static final String EVENT_TYPE_PATTERN = "CALENDAR_EVENT_.+";
+    private static final String EVENT_TYPE_PATTERN = "PLACE_.+";
     public static final RecordFilterStrategy<String, String> filterStrategy = generateFilterStrategy(EVENT_TYPE_PATTERN);
 
     private final List<Place> placeList = new ArrayList<>();
@@ -30,8 +31,8 @@ public class PlaceConsumer extends BaseConsumer {
 
     //TODO: add to the database
     @KafkaListener(
-            topics = "#{@kafkaConfig.topics[T(CRUD).CREATE]}",
-            filter = "#{T(PlaceConsumer).filterStrategy}"
+            topics = KafkaConfig.CREATE_TOPIC,
+            filter = "#{@placeConsumer.filterStrategy}"
     )
     public void consumePlaceCreatedEvent(String jsonMessage) {
         try {
@@ -48,8 +49,8 @@ public class PlaceConsumer extends BaseConsumer {
     }
 
     @KafkaListener(
-            topics = "#{@kafkaConfig.topics[T(CRUD).DELETE]}",
-            filter = "#{T(PlaceConsumer).filterStrategy}"
+            topics = KafkaConfig.DELETE_TOPIC,
+            filter = "#{@placeConsumer.filterStrategy}"
     )
     public void consumePlaceDeletedEvent(String jsonMessage) {
         try {
